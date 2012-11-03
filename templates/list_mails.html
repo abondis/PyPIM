@@ -1,0 +1,55 @@
+{% for b in boxes[1] %}
+<li>
+{% set b = b.split(" ")[2][1:-1] %}
+  <a href="{{url_for('list_mails', box=b)}}">
+    {{b}}
+  </a>
+</li>
+{% endfor %}
+
+<TABLE>
+  <THEAD>
+    <tr>
+      <td>
+        From
+      </td>
+      <td>
+        To
+      </td>
+      <td>
+        Subject
+      </td>
+      <td>
+        Date
+      </td>
+    </tr>
+  </THEAD>
+  <TBODY>
+    {% for m in mails %}
+    {% set uid = m[0] %}
+    {% set m = m[1] %}
+    <tr>
+      <td>
+        <a href="{{url_for('read_mail', box=box, mailid=uid)}}">
+          {{m['From']|decode_header|join}}
+        </a>
+      </td>
+      <td>
+        <a href="{{url_for('read_mail', box=box, mailid=uid)}}">
+          {{m['To']|decode_header|join}}
+        </a>
+      </td>
+      <td>
+        <a href="{{url_for('read_mail', box=box, mailid=uid)}}">
+          {{m['Subject']|decode_header|join}}
+        </a>
+      </td>
+      <td>
+        <a href="{{url_for('read_mail', box=box, mailid=uid)}}">
+          {{m['Date']|decode_header|join}}
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </TBODY>
+</TABLE>
