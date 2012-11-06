@@ -1,3 +1,5 @@
 env
 *.swp
 *.pyc
+bodystructure.py
+config/dev-config.ini

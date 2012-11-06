@@ -1,33 +1,16 @@
-{% set from_name = msg.From|decode_header(0) %}
-{% set from_email = msg.From|decode_header(1) %}
 From:
 <a href="/contact/?name={{from_name}}&email={{from_email}}">
-  {{from_name}}{{from_email}}
+  {{headers['From']}}
 </a>
 <br/>
-{% set to_name = msg.To|decode_header(0) %}
-{% set to_email = msg.To|decode_header(1) %}
 To:
 <a href="/contact/?name={{to_name}}&email={{to_email}}">
-  {{to_name}}{{to_email}}
+  {{headers['To']}}
 </a>
 <br/>
-{% set subject = msg.Subject|decode_header(0) %}
 Subject:
-{{subject}}
+{{headers['Subject']}}
 <br/>
-{% set msg_content = msg.get_payload() %}
-{% if msg_content.__class__ == [].__class__ %}
-  {% for c in msg_content %}
-    <br/>
-    {% if c.get_content_type() == 'text/plain' %}
-      {% autoescape false %}
-      {{c.as_string()|parse_payload|safe}}
-      {% endautoescape %}
-    {% else %}
-      {{c.as_string()|parse_payload|safe}}
-    {% endif %}
-  {% endfor %}
-{% else %}
-  {{msg_content|parse_payload|safe}}
-{% endif %}
+{{plaintext|nl2br|safe}}
+<br/>
+{{html|safe}}

@@ -25,31 +25,39 @@
     </tr>
   </THEAD>
   <TBODY>
+    {% if not mails %}
+    <tr>
+      <td>
+        This folder is empty
+      </td>
+    </tr>
+    {% else %}
     {% for m in mails %}
-    {% set uid = m[0] %}
-    {% set m = m[1] %}
+    {% set uid = m['id'] %}
+    {% set m = m['msg'] %}
     <tr>
       <td>
         <a href="{{url_for('read_mail', box=box, mailid=uid)}}">
-          {{m['From']|decode_header|join}}
+          {{m['From']}}
         </a>
       </td>
       <td>
         <a href="{{url_for('read_mail', box=box, mailid=uid)}}">
-          {{m['To']|decode_header|join}}
+          {{m['To']}}
         </a>
       </td>
       <td>
         <a href="{{url_for('read_mail', box=box, mailid=uid)}}">
-          {{m['Subject']|decode_header|join}}
+          {{m['Subject']}}
         </a>
       </td>
       <td>
         <a href="{{url_for('read_mail', box=box, mailid=uid)}}">
-          {{m['Date']|decode_header|join}}
+          {{m['Date']}}
         </a>
       </td>
     </tr>
     {% endfor %}
+    {% endif %}
   </TBODY>
 </TABLE>
